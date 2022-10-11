@@ -1,0 +1,91 @@
+type User {
+  created_at: DateTime
+  email: String
+  id: ID!
+  password: String
+  phone_number: ID
+  username: String
+}
+
+type Query {
+  getUserList: [User]
+    @dbquery(
+      type: "postgresql"
+      schema: "public"
+      table: "user"
+      configuration: "postgresql_config"
+    )
+  """
+  This query is an example of how to simply paginate your responses.
+  """
+  getPaginatedUserList(first: Int!, after: Int!): [User]
+    @dbquery(
+      type: "postgresql"
+      query: """
+      select * from "public"."user" limit $1 offset $2
+      """
+      configuration: "postgresql_config"
+    )
+  """
+  In this example, a single query parameter is passed. If the request to the DB will
+  return at most one value you can remove the square brackets from the result.
+  """
+  getUserById(id: ID!): [User]
+    @dbquery(
+      type: "postgresql"
+      query: """
+      select * from "public"."user" where "id" = $1
+      """
+      configuration: "postgresql_config"
+    )
+  """
+  In this example, two query parameters are passed. If the request to the DB will
+  return at most one value you can remove the square brackets from the result.
+  """
+  getUserByIdAndPhone_number(id: ID!, phone_number: ID!): [User]
+    @dbquery(
+      type: "postgresql"
+      query: """
+      select * from "public"."user" where "id" = $1 and "phone_number" = $2
+      """
+      configuration: "postgresql_config"
+    )
+}
+
+type Mutation {
+  """
+  In this mutation example you can see how to do a mutation to insert data in the database.
+  """
+  insertUser(
+    created_at: DateTime!
+    email: String!
+    phone_number: ID!
+    password: String!
+    username: String!
+  ): User
+    @dbquery(
+      type: "postgresql"
+      schema: "public"
+      table: "user"
+      dml: INSERT
+      configuration: "postgresql_config"
+    )
+  """
+  In this mutation example you can see how to do a mutation to delete data from the database.
+  """
+  deleteUser(
+    created_at: DateTime!
+    email: String!
+    id: ID!
+    phone_number: ID!
+    password: String!
+    username: String!
+  ): User
+    @dbquery(
+      type: "postgresql"
+      schema: "public"
+      table: "user"
+      dml: DELETE
+      configuration: "postgresql_config"
+    )
+}
