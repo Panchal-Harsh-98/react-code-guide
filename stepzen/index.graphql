@@ -1,13 +1,3 @@
 schema @sdl(files: ["postgresql/index.graphql"]) {
   query: Query
 }
-type Query{
-  getUserList {
-    created_at
-    email
-    id
-    password
-    phone_number
-    username
-  }
-}
