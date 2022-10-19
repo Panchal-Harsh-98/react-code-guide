@@ -2,8 +2,7 @@ type User {
   created_at: DateTime
   email: String
   id: ID!
-  password: String
-  phone_number: ID
+  phone_number: String
   username: String
 }
 
@@ -56,13 +55,7 @@ type Mutation {
   """
   In this mutation example you can see how to do a mutation to insert data in the database.
   """
-  insertUser(
-    created_at: DateTime!
-    email: String!
-    phone_number: ID!
-    password: String!
-    username: String!
-  ): User
+  insertUser(email: String!, phone_number: String!, username: String!): User
     @dbquery(
       type: "postgresql"
       schema: "public"
@@ -77,8 +70,7 @@ type Mutation {
     created_at: DateTime!
     email: String!
     id: ID!
-    phone_number: ID!
-    password: String!
+    phone_number: Int!
     username: String!
   ): User
     @dbquery(

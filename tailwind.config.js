@@ -11,14 +11,16 @@ module.exports = {
     colors: {
       ...colors,
       primary: {
-        100: '#2A4A61',
-        200: '#1C3041',
+        100: '#202142',
+        200: 'rgba(0,0,0,0.4)',
+        300: '#333',
       },
       accent: {
-        100: '#2FE6DE',
-        200: '#18F2B2',
+        turquoise: '#2FE6DE',
+        green: '#18F2B2',
+        pink: '#ff6a95',
       },
-      purple: '#B2ABF2',
+      purple: '#663399',
       brown: '#89043D',
     },
   },

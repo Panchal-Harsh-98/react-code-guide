@@ -17,14 +17,13 @@ const Home: NextPage = () => {
         <title>React-code-guide</title>
         <link rel='icon' href='/favicon.ico' />
       </Head>
-      <div className='flex flex-col items-center my-3'>
-        <p className='text-3xl text-accent-100'>Register</p>
-      </div>
-      <div className={`bg-primary-200 rounded-lg shadow-xl `}>
-        <RegistrationForm />
-      </div>
+
+      <RegistrationForm />
       <Link href={`/userList/UserList`}>
-        <button className='bg-primary-200 rounded-lg  shadow-md hover:shadow-2xl my-5 h-10 text-white'>
+        <button
+          className='button-header py-3 bg-primary-200 rounded-lg shadow-md hover:shadow-2xl my-5 mx-0
+         text-accent-pink'
+        >
           View users
         </button>
       </Link>

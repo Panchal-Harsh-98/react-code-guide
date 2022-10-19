@@ -1,57 +1,91 @@
-import React from 'react';
+import { useMutation } from '@apollo/client';
+import React, { useEffect } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
+import { toast } from 'react-hot-toast';
+import { ADD_USER } from '../graphql/mutation';
 type Inputs = {
-  example: String;
-  password: String;
+  username: String;
   email: String;
   phone_number: String;
 };
+
 function RegistrationForm() {
   const {
     register,
+    setValue,
     handleSubmit,
     watch,
     formState: { errors },
   } = useForm<Inputs>();
-  const onSubmit: SubmitHandler<Inputs> = (data) => {};
+
+  const onSubmit: SubmitHandler<Inputs> = (formData) => {
+    registerUser(formData);
+  };
+  const [addUser] = useMutation(ADD_USER);
+
+  const registerUser = async (userData: Inputs) => {
+    const notification = toast.loading('creating user!!');
+
+    try {
+      const { data } = await addUser({
+        variables: {
+          username: userData.username,
+          email: userData.email,
+          phoneNumber: userData.phone_number,
+        },
+      });
+      toast.success('New Post Created!', {
+        id: notification,
+      });
+      console.log(data);
+
+      setValue('email', '');
+      setValue('username', '');
+      setValue('phone_number', '');
+    } catch (error) {
+      toast.error('Oops! Someting went wrong', {
+        id: notification,
+      });
+      console.log('API call error', error);
+    }
+  };
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <div className='flex flex-col flex-wrap p-4 space-y-2'>
+      <div className='bg-white rounded-lg shadow-xl flex flex-col flex-wrap p-6 space-y-4'>
+        <div className='flex flex-col items-center'>
+          <p className='text-3xl text-primary-100'>Register Now</p>
+        </div>
+
         {/* Username */}
         <div className='form-container'>
-          <p className='text-sm pb-1 mx-1 text-white'>Username</p>
           <input
-            className=' p-2 rounded flex-1 '
+            className='form-field'
+            placeholder='Enter username'
             type='text'
-            {...register('example', { required: true })}
+            {...register('username', { required: true })}
           />
-          {errors.example && <span>This field is required</span>}
+          {errors.username && (
+            <span className='text-sm mt-1 ml-2 text-red-500'>
+              This field is required
+            </span>
+          )}
         </div>
 
         <div className='form-container'>
-          <p className='text-sm pb-1 mx-1 text-white'>Password</p>
           <input
-            className=' p-2 rounded flex-1 placeholder:italic'
-            type='password'
-            {...register('password', { required: true })}
-          />
-        </div>
-
-        <div className='form-container'>
-          <p className='text-sm pb-1 mx-1 text-white'>Email</p>
-          <input
-            className=' p-2 rounded flex-1 placeholder:italic'
-            type='password'
+            className='form-field'
+            placeholder='Enter e-mail'
+            type='text'
             {...register('email', { required: true })}
           />
         </div>
 
         <div className='form-container'>
-          <p className='text-sm pb-1 mx-1 text-white'>Phone No.</p>
           <input
-            className=' p-2 rounded flex-1 placeholder:italic'
-            type='password'
+            className='form-field'
+            type='text'
+            placeholder='Enter phone number'
             {...register('phone_number', { required: true })}
           />
         </div>
@@ -60,7 +94,7 @@ function RegistrationForm() {
         <input
           type='submit'
           value='Submit'
-          className='bg-primary-100 h-10 rounded-md hover:shadow-lg shadow-accent-100 text-white !mt-6'
+          className='bg-accent-pink py-3 rounded-md hover:shadow-lg text-primary-100 text-md font-bold !mt-4'
         />
       </div>
     </form>

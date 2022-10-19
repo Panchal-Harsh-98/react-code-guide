@@ -6,4 +6,10 @@
   .form-container {
     @apply flex flex-col flex-1;
   }
+  .button-header {
+    @apply bg-primary-100 px-4 py-3 text-sm mx-3 text-white rounded-lg hover:shadow-lg hover:bg-accent-pink hover:text-primary-100 transition ease-in-out duration-200 font-bold;
+  }
+  .form-field {
+    @apply py-3 px-6 block rounded-lg border border-primary-100 hover:ring-accent-pink hover:border-accent-pink placeholder:italic placeholder:text-slate-300;
+  }
 }

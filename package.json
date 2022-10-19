@@ -6,10 +6,12 @@
     "start": "next start"
   },
   "dependencies": {
+    "@apollo/client": "^3.7.0",
     "next": "latest",
     "react": "18.1.0",
     "react-dom": "18.1.0",
     "react-hook-form": "^7.37.0",
+    "react-hot-toast": "^2.4.0",
     "sass": "^1.55.0"
   },
   "devDependencies": {
