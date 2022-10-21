@@ -7,13 +7,13 @@ type User {
 }
 
 type Query {
-  # getUserList: [User]
-  #   @dbquery(
-  #     type: "postgresql"
-  #     schema: "public"
-  #     table: "user"
-  #     configuration: "postgresql_config"
-  #   )
+  getUserList: [User]
+    @dbquery(
+      type: "postgresql"
+      schema: "public"
+      table: "user"
+      configuration: "postgresql_config"
+    )
   """
   This query is an example of how to simply paginate your responses.
   """
